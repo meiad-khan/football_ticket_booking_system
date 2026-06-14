@@ -54,3 +54,52 @@ INSERT INTO Bookings (booking_id, user_id, match_id, seat_number, payment_status
 (503, 2, 101, 'A-13', 'Confirmed', 150.00),
 (504, 2, 101, NULL, NULL, 150.00),
 (505, 3, 102, 'C-20', 'Pending', 120.00);
+
+
+ --- Retrieve all upcoming football matches belonging to the 'Champions League' where the match status is 'Available'
+ select
+  match_id,
+  fixture,
+  base_ticket_price
+from
+  matches
+where
+  tournament_category='Champions League'
+  and
+  match_status = 'Available';
+
+
+--- Search for all users whose full names start with 'Tanvir' or contain the phrase 'Haque' (case-insensitive)
+select
+  user_id,
+  full_name,
+  email
+from
+  users
+where
+  full_name ilike 'Tanvir%'
+  or full_name ilike '%Haque%';
+
+
+--- Retrieve all booking records where the payment status is missing (NULL), replacing the empty result with 'Action Required'.
+select
+  booking_id,
+  user_id,
+  match_id,
+  coalesce(payment_status, 'Action Required')
+from
+  bookings
+where
+  payment_status is null;
+
+
+-- Retrieve match booking details along with the User's full name and the scheduled Match fixture teams.
+select
+  booking_id,
+  full_name,
+  fixture,
+  total_cost
+from
+  users as u
+  join bookings as b on u.user_id = b.user_id
+  join matches as m on b.match_id = m.match_id;  
