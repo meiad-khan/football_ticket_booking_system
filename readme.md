@@ -129,10 +129,13 @@ These records were provided as part of the assignment specification.
 ## Project Structure
 
 ```text
+Project Structure
 Football_Ticket_Booking_System/
 │
 ├── QUERY.sql
 ├── README.md
+├── ERD/
+│   └── football_ticket_booking_erd.png
 ```
 
 ---
