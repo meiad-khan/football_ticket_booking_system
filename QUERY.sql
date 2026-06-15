@@ -103,3 +103,44 @@ from
   users as u
   join bookings as b on u.user_id = b.user_id
   join matches as m on b.match_id = m.match_id;  
+
+
+-- Display a comprehensive list of all users and their booking IDs, ensuring that fans who have never bought a ticket are still listed
+select
+  u.user_id,
+  full_name,
+  booking_id
+from
+  users as u
+  left join bookings as b on u.user_id = b.user_id;
+
+
+-- Find all ticket bookings where the total cost is strictly higher than the average cost of all ticket bookings
+select
+  booking_id,
+  match_id,
+  total_cost
+from
+  bookings
+where
+  total_cost > (
+    select
+      avg(total_cost)
+    from
+      bookings
+  );  
+
+
+--- Retrieve the top 2 most expensive matches sorted by base ticket price, skipping the absolute highest premium match
+select
+  match_id,
+  fixture,
+  base_ticket_price
+from
+  matches
+order by
+  base_ticket_price desc
+limit
+  2
+offset
+  1
